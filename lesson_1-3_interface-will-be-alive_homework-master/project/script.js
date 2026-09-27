@@ -5,6 +5,29 @@ const panel = document.querySelector("#details-panel");
 const detailsTitle = document.querySelector("#details-title");
 const detailsDescription = document.querySelector("#details-description");
 
+const historyList = document.querySelector("#history-list");
+let recentTitles = [];
+
+// Добавить название в историю: новое первым, без повторов, максимум 3
+function addToHistory(title) {
+  recentTitles = recentTitles.filter(function (item) {
+    return item !== title;
+  });
+  recentTitles.unshift(title);
+  recentTitles = recentTitles.slice(0, 3);
+  renderHistory();
+}
+
+// Перерисовать список истории через DOM
+function renderHistory() {
+  historyList.innerHTML = "";
+  recentTitles.forEach(function (title) {
+    const item = document.createElement("li");
+    item.textContent = title;
+    historyList.append(item);
+  });
+}
+
 // Общая функция выбора карточки
 function selectCard(card) {
   // 1. Снимаем выделение со всех карточек
@@ -20,6 +43,7 @@ function selectCard(card) {
   // 3. Показываем её данные в панели
   detailsTitle.textContent = card.dataset.title;
   detailsDescription.textContent = card.dataset.description;
+    addToHistory(card.dataset.title);
 
     // 4. Запускаем анимацию панели
   panel.classList.remove("details-panel--pulse");
@@ -113,6 +137,8 @@ const resetButton = document.querySelector("#reset-button");
 function resetAll() {
   applyFilter("all");
   clearSelection();
+  recentTitles = [];
+  renderHistory();
 }
 
 resetButton.addEventListener("click", resetAll);
