@@ -109,3 +109,20 @@ filterButtons.forEach(function (button) {
     applyFilter(button.dataset.filter);
   });
 });
+// Этап 4. Случайный выбор
+const randomButton = document.querySelector("#random-button");
+
+randomButton.addEventListener("click", function () {
+  let candidates = getVisibleCards();
+  const selected = document.querySelector(".collection-card--selected");
+
+  // Если есть из чего выбирать, убираем текущую карточку
+  if (candidates.length > 1) {
+    candidates = candidates.filter(function (card) {
+      return card !== selected;
+    });
+  }
+
+  const randomIndex = Math.floor(Math.random() * candidates.length);
+  selectCard(candidates[randomIndex]);
+});
