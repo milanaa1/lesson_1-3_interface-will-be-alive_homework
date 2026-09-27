@@ -17,3 +17,37 @@
 
 // Этап 6. Запускайте подготовленную CSS-анимацию через класс.
 // Не дублируйте оформление в script.js.
+// Находим элементы на странице
+const cards = document.querySelectorAll(".collection-card");
+const panel = document.querySelector("#details-panel");
+const detailsTitle = document.querySelector("#details-title");
+const detailsDescription = document.querySelector("#details-description");
+
+// Общая функция выбора карточки
+function selectCard(card) {
+  // 1. Снимаем выделение со всех карточек
+  cards.forEach(function (item) {
+    item.classList.remove("collection-card--selected");
+    item.setAttribute("aria-pressed", "false");
+  });
+
+  // 2. Выделяем выбранную
+  card.classList.add("collection-card--selected");
+  card.setAttribute("aria-pressed", "true");
+
+  // 3. Показываем её данные в панели
+  detailsTitle.textContent = card.dataset.title;
+  detailsDescription.textContent = card.dataset.description;
+
+    // 4. Запускаем анимацию панели
+  panel.classList.remove("details-panel--pulse");
+  void panel.offsetWidth;
+  panel.classList.add("details-panel--pulse");
+}
+
+// Вешаем клик на каждую карточку
+cards.forEach(function (card) {
+  card.addEventListener("click", function () {
+    selectCard(card);
+  });
+});
