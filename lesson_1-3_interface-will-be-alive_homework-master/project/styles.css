@@ -563,3 +563,8 @@ a:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+.keyboard-hint {
+  margin: 1rem 0.35rem 0.2rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}

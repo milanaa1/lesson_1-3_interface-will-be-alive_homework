@@ -110,7 +110,42 @@ randomButton.addEventListener("click", function () {
 // Этап 5. Полный сброс
 const resetButton = document.querySelector("#reset-button");
 
-resetButton.addEventListener("click", function () {
+function resetAll() {
   applyFilter("all");
   clearSelection();
+}
+
+resetButton.addEventListener("click", resetAll);
+// Бонус, управление с клавиатуры
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    resetAll();
+    return;
+  }
+
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+    return;
+  }
+
+  const visible = getVisibleCards();
+  const selected = document.querySelector(".collection-card--selected");
+  let index = visible.indexOf(selected);
+
+  if (event.key === "ArrowRight") {
+    index = index + 1;
+  } else {
+    index = index - 1;
+  }
+
+  // Зацикливаем после последней идёт первая и наоборот
+  if (index >= visible.length) {
+    index = 0;
+  }
+  if (index < 0) {
+    index = visible.length - 1;
+  }
+
+  event.preventDefault();
+  selectCard(visible[index]);
+  visible[index].focus();
 });
