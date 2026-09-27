@@ -126,3 +126,10 @@ randomButton.addEventListener("click", function () {
   const randomIndex = Math.floor(Math.random() * candidates.length);
   selectCard(candidates[randomIndex]);
 });
+// Этап 5. Полный сброс
+const resetButton = document.querySelector("#reset-button");
+
+resetButton.addEventListener("click", function () {
+  applyFilter("all");
+  clearSelection();
+});
